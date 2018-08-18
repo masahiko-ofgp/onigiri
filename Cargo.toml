@@ -1,0 +1,6 @@
+[package]
+name = "onigiri"
+version = "0.1.0"
+authors = ["masahiko <ichigyo.zanmai@gmail.com>"]
+
+[dependencies]
