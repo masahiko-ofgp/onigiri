@@ -2,5 +2,7 @@
 name = "onigiri"
 version = "0.1.0"
 authors = ["masahiko <ichigyo.zanmai@gmail.com>"]
-
+description = """
+This crate is a tool of handling chars.
+"""
 [dependencies]

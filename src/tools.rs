@@ -1,23 +1,22 @@
-/// onigiri::tools can convert from Vec<char> to some types.
-///
-/// ```
-/// let test_text = "12345".to_string();
-/// let test_chars: Vec<char> = test_text.chars().collect();
-/// let mut new_usize = onigiri::tools::Nusize::new(&test_chars);
-/// assert_eq!(&new_usize.attr, &12345_usize);
-/// assert_eq!(&new_usize.attr - 2345_usize, 10000_usize);
-/// ```
-
 use std::str::FromStr;
 
-// Helper function.
-// Convert from Vec<char> to String.
-// e.g.) vec!['1', '2', '3'] => String "123"
+
 pub fn chars_to_string(chars: &Vec<char>) -> String {
+    //! Convert from `Vec<char>` to `String`.
+    //! This function is used in N* and Literal.
     let vec_str: Vec<String> = chars.iter()
         .map(|ref v| v.to_string()).collect();
     let result = vec_str.concat();
     result
+}
+
+pub fn create_vvchar(text: &String) -> Vec<Vec<char>>{
+    //! This function convert from `String` to `Vec<Vec<char>>`.
+    let split_text: Vec<&str> = text.split_whitespace().collect();
+    let vvchar: Vec<Vec<char>> = split_text.iter()
+        .map(|&x| x.chars().collect()).collect();
+    
+    vvchar
 }
 
 // Create i8 from chars.
