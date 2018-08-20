@@ -1,3 +1,13 @@
+/// onigiri::tools can convert from Vec<char> to some types.
+///
+/// ```
+/// let test_text = "12345".to_string();
+/// let test_chars: Vec<char> = test_text.chars().collect();
+/// let mut new_usize = onigiri::tools::Nusize::new(&test_chars);
+/// assert_eq!(&new_usize.attr, &12345_usize);
+/// assert_eq!(&new_usize.attr - 2345_usize, 10000_usize);
+/// ```
+
 use std::str::FromStr;
 
 // Helper function.
@@ -10,6 +20,16 @@ pub fn chars_to_string(chars: &Vec<char>) -> String {
     result
 }
 
+// Create i8 from chars.
+pub struct Ni8{pub attr: i8}
+
+impl Ni8 {
+    pub fn new(attr: &Vec<char>) -> Ni8 {
+        let n = chars_to_string(&attr);
+        Ni8 {attr: i8::from_str(&n).unwrap()}
+    }
+}
+
 // Create u8 from chars.
 pub struct Nu8{pub attr: u8}
 
@@ -17,6 +37,26 @@ impl Nu8 {
     pub fn new(attr: &Vec<char>) -> Nu8 {
         let n = chars_to_string(&attr);
         Nu8 {attr: u8::from_str(&n).unwrap()}
+    }
+}
+
+// Create i16 from chars.
+pub struct Ni16{pub attr: i16}
+
+impl Ni16 {
+    pub fn new(attr: &Vec<char>) -> Ni16 {
+        let n = chars_to_string(&attr);
+        Ni16 {attr: i16::from_str(&n).unwrap()}
+    }
+}
+
+// Create u16 from chars.
+pub struct Nu16{pub attr: u16}
+
+impl Nu16 {
+    pub fn new(attr: &Vec<char>) -> Nu16 {
+        let n = chars_to_string(&attr);
+        Nu16 {attr: u16::from_str(&n).unwrap()}
     }
 }
 
@@ -30,6 +70,16 @@ impl Ni32 {
     }
 }
 
+// Create u32 from chars.
+pub struct Nu32{pub attr: u32}
+
+impl Nu32 {
+    pub fn new(attr: &Vec<char>) -> Nu32 {
+        let n = chars_to_string(&attr);
+        Nu32 {attr: u32::from_str(&n).unwrap()}
+    }
+}
+
 // Create i64 from chars.
 pub struct Ni64{pub attr: i64}
 
@@ -37,6 +87,36 @@ impl Ni64 {
     pub fn new(attr: &Vec<char>) -> Ni64 {
         let n = chars_to_string(&attr);
         Ni64 {attr: i64::from_str(&n).unwrap()}
+    }
+}
+
+// Create u64 from chars.
+pub struct Nu64{pub attr: u64}
+
+impl Nu64 {
+    pub fn new(attr: &Vec<char>) -> Nu64 {
+        let n = chars_to_string(&attr);
+        Nu64 {attr: u64::from_str(&n).unwrap()}
+    }
+}
+
+// Create isize from chars.
+pub struct Nisize{pub attr: isize}
+
+impl Nisize {
+    pub fn new(attr: &Vec<char>) -> Nisize {
+        let n = chars_to_string(&attr);
+        Nisize {attr: isize::from_str(&n).unwrap()}
+    }
+}
+
+// Create usize from chars.
+pub struct Nusize{pub attr: usize}
+
+impl Nusize {
+    pub fn new(attr: &Vec<char>) -> Nusize {
+        let n = chars_to_string(&attr);
+        Nusize {attr: usize::from_str(&n).unwrap()}
     }
 }
 
