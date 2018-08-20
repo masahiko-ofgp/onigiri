@@ -1,6 +1,6 @@
 # onigiri
 
-![onigiri](./imgs/onigiri22.png)
+![onigiri](./imgs/onigiri2.png)
 
 onigiri is the tool of handling `chars` in Rust.
 The japanese name of rice ball is "Onigiri". 
