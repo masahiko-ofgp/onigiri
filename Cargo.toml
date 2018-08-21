@@ -3,6 +3,9 @@ name = "onigiri"
 version = "0.1.0"
 authors = ["masahiko <ichigyo.zanmai@gmail.com>"]
 repository = "https://github.com/masahiko-ofgp/onigiri"
+license-file = "LICENSE"
+readme = "README.md"
+keywords = ["onigiri", "chars"]
 description = """
 This crate is a tool of handling chars.
 """
