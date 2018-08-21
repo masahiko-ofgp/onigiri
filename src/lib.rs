@@ -14,6 +14,9 @@
 /// let mut new_isize = onigiri::tools::Nisize::new(&new_vvchar[0]);
 /// assert_eq!(&new_isize.attr, &-123_isize);
 /// assert_eq!(&new_isize.attr + 23_isize, -100_isize);
+///
+/// let new_i128 = onigiri::tools::Ni128::new(&new_vvchar[0]);
+/// assert_eq!(&new_i128.attr, &-123_i128);
 /// ```
 ///
 

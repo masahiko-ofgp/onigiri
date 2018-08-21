@@ -112,6 +112,26 @@ impl Nu64 {
     }
 }
 
+// Create i128 from chars.
+pub struct Ni128{pub attr: i128}
+
+impl Ni128 {
+    pub fn new(attr: &Vec<char>) -> Ni128 {
+        let n = chars_to_string(&attr);
+        Ni128 {attr: i128::from_str(&n).unwrap()}
+    }
+}
+
+// Create u128 from chars.
+pub struct Nu128{pub attr: u128}
+
+impl Nu128 {
+    pub fn new(attr: &Vec<char>) -> Nu128 {
+        let n = chars_to_string(&attr);
+        Nu128 {attr: u128::from_str(&n).unwrap()}
+    }
+}
+
 // Create isize from chars.
 pub struct Nisize{pub attr: isize}
 
