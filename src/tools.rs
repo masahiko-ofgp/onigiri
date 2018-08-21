@@ -4,6 +4,12 @@ use std::str::FromStr;
 pub fn chars_to_string(chars: &Vec<char>) -> String {
     //! Convert from `Vec<char>` to `String`.
     //! This function is used in N* and Literal.
+    //! ```
+    //! let chars: Vec<char> = vec!['-', '1', '2', '3'];
+    //! assert_eq!(
+    //!     onigiri::tools::chars_to_string(&chars), 
+    //!     "-123".to_string());
+    //! ```
     let vec_str: Vec<String> = chars.iter()
         .map(|ref v| v.to_string()).collect();
     let result = vec_str.concat();
@@ -12,6 +18,13 @@ pub fn chars_to_string(chars: &Vec<char>) -> String {
 
 pub fn create_vvchar(text: &String) -> Vec<Vec<char>>{
     //! This function convert from `String` to `Vec<Vec<char>>`.
+    //! ```
+    //! let text = "123 456".to_string();
+    //! assert_eq!(
+    //!     onigiri::tools::create_vvchar(&text),
+    //!     vec![vec!['1','2','3'], vec!['4','5','6']]
+    //! );
+    //! ```
     let split_text: Vec<&str> = text.split_whitespace().collect();
     let vvchar: Vec<Vec<char>> = split_text.iter()
         .map(|&x| x.chars().collect()).collect();
