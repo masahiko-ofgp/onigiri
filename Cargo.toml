@@ -2,6 +2,7 @@
 name = "onigiri"
 version = "0.1.0"
 authors = ["masahiko <ichigyo.zanmai@gmail.com>"]
+repository = "https://github.com/masahiko-ofgp/onigiri"
 description = """
 This crate is a tool of handling chars.
 """
