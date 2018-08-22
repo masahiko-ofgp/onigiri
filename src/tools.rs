@@ -1,3 +1,6 @@
+//! onigiri::tools contains 2 functions and 13 structs.
+
+
 use std::str::FromStr;
 
 
