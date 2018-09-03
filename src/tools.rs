@@ -1,5 +1,7 @@
-//! onigiri::tools contains 2 functions and 13 structs.
-
+//! `onigiri::tools` contains 2 functions and 14 structs.
+//!
+//! Sep 3 2018, I add new struct `Vvc`.
+//! However, I didn't changed the previous functions.
 
 use std::str::FromStr;
 
@@ -33,6 +35,65 @@ pub fn create_vvchar(text: &String) -> Vec<Vec<char>>{
         .map(|&x| x.chars().collect()).collect();
     
     vvchar
+}
+
+// Vvc is abbreviation of Vec<Vec<char>>.
+#[derive(Debug)]
+pub struct Vvc {
+    pub attr: Vec<Vec<char>>,
+    count: usize
+}
+
+impl Vvc {
+    pub fn new(attr: &String) -> Vvc {
+        //! This function create `Vvc` from `String`.
+        //! It is almost the same as `create_vvchar()`,
+        //! but you can use `next()` and `nth()`.
+        //! 
+        //! ```
+        //! let test_text = "-123".to_string();
+        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text);
+        //! assert_eq!(&new_vvc.attr, &vec![vec!['-','1','2','3']]);
+        //! ```
+        Vvc { attr: create_vvchar(&attr), count: 0 }
+    }
+}
+
+// This iterator iterates over Vec<Vec<char>> converted to String.
+impl Iterator for Vvc {
+    type Item = String;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        //! ```
+        //! let test_text = "-123 + 456".to_string();
+        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text);
+        //! assert_eq!(&new_vvc.next(), &Some("-123".to_string()));
+        //! assert_eq!(&new_vvc.next(), &Some("+".to_string()));
+        //! assert_eq!(&new_vvc.next(), &Some("456".to_string()));
+        //! assert_eq!(&new_vvc.next(), &None);
+        //! ```
+        self.count += 1;
+
+        if self.count <= self.attr.len() {
+            Some(chars_to_string(&(self.attr[self.count - 1])))
+        } else {
+            None
+        }
+    }
+    
+    fn nth(&mut self, n: usize) -> Option<Self::Item> {
+        //! ```
+        //! let test_text = "-123 + 456".to_string();
+        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text);
+        //! assert_eq!(&new_vvc.nth(1), &Some("+".to_string()));
+        //! assert_eq!(&new_vvc.nth(3), &None);
+        //! ```
+        if n < self.attr.len() {
+            Some(chars_to_string(&(self.attr[n])))
+        } else {
+            None
+        }
+    }
 }
 
 // Create i8 from chars.

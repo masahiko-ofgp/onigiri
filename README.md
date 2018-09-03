@@ -8,7 +8,20 @@ In my image, a grain of rice is `char`.
 And what collected them is `chars`. 
 And the seasoning of it is each structure of `onigiri::tools`.
 
+Sep 3 2018, I add new struct Vvc.
+However, I didn't changed the previous functions.
+Although it may be a few, someone may already be using it.
+I'm doing my best to develop that it can be used more easily and clearly.
+
 ## Usage
+
+You add onigiri in Cargo.toml.
+
+```
+[dependencies]
+onigiri = "0.1.5"
+```
+example is as follows.
 
 ```
 extern crate onigiri;
