@@ -5,24 +5,16 @@
 //! Some examples are as follows.
 //!
 //! ```
-//! let test_text = "-123".to_string();
+//! let test_text = "(13 + 2)".to_string();
 //!
 //! let new_vvchar = onigiri::tools::create_vvchar(&test_text);
-//! assert_eq!(&new_vvchar, &vec![vec!['-', '1', '2', '3']]);
-//! assert_eq!(onigiri::validator::is_negative_number(&new_vvchar[0]), true);
+//! assert_eq!(&new_vvchar, &vec![vec!['(', '1','3'],vec!['+'],vec!['2', ')']]);
+//! let thirteen = &new_vvchar[0][1..].to_vec();
+//! assert_eq!(onigiri::validator::is_positive_number(&thirteen), true);
 //!
-//! let num = onigiri::tools::Ni32::new(&new_vvchar[0]);
-//! assert_eq!(&num.attr, &-123_i32);
-//!
-//! let literal = onigiri::tools::Literal::new(&new_vvchar[0]);
-//! assert_eq!(&literal.attr, &"-123".to_string());
-//!
-//! let mut new_isize = onigiri::tools::Nisize::new(&new_vvchar[0]);
-//! assert_eq!(&new_isize.attr, &-123_isize);
-//! assert_eq!(&new_isize.attr + 23_isize, -100_isize);
-//!
-//! let new_i128 = onigiri::tools::Ni128::new(&new_vvchar[0]);
-//! assert_eq!(&new_i128.attr, &-123_i128);
+//! let num = onigiri::tools::cast::<u8>(&thirteen);
+//! assert_eq!(&num, &Some(13_u8));
+//! assert_eq!(&num.unwrap() + 2, 15_u8);
 //! ```
 //!
 

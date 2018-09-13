@@ -8,6 +8,11 @@ In my image, a grain of rice is `char`.
 And what collected them is `chars`. 
 And the seasoning of it is each structure of `onigiri::tools`.
 
+
+Sep 13 2018, I remove some structs.
+Instead of them, I added new function `cast`.
+
+
 Sep 3 2018, I add new struct Vvc.
 However, I didn't changed the previous functions.
 Although it may be a few, someone may already be using it.
@@ -28,13 +33,16 @@ extern crate onigiri;
 use onigiri::tools;
 
 fn main() {
-    let test_text = "-123 456".to_string();
-    let new_vvchar = tools::create_vvchar(&test_text);
-
-    let new_ni32 = tools::Ni32::new(&new_vvchar[0]);
-    let new_ni32_2 = tools::Ni32::new(&new_vvchar[1]);
-
-    let addition = new_ni32.attr + new_ni32_2.attr;
-    assert_eq!(addition, 333_i32);
+    let test_text = "(13 + 2)".to_string();
+    
+    let new_vvchar = onigiri::tools::create_vvchar(&test_text);
+    assert_eq!(&new_vvchar, &vec![vec!['(', '1','3'],vec!['+'],vec!['2', ')']]);
+    
+    let thirteen = &new_vvchar[0][1..].to_vec();
+    assert_eq!(onigiri::validator::is_positive_number(&thirteen), true);
+   
+    let num = onigiri::tools::cast::<u8>(&thirteen);
+    assert_eq!(&num, &Some(13_u8));
+    assert_eq!(&num.unwrap() + 2, 15_u8);
 }
 ```
