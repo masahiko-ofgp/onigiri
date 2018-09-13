@@ -24,7 +24,7 @@ You add onigiri in Cargo.toml.
 
 ```
 [dependencies]
-onigiri = "0.1.5"
+onigiri = "0.1.6"
 ```
 example is as follows.
 
