@@ -38,7 +38,7 @@ pub fn create_vvchar(text: &String) -> Vec<Vec<char>>{
 }
 
 // Vvc is abbreviation of Vec<Vec<char>>.
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Vvc {
     pub attr: Vec<Vec<char>>,
     count: usize
@@ -67,10 +67,10 @@ impl Iterator for Vvc {
         //! ```
         //! let test_text = "-123 + 456".to_string();
         //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text);
-        //! assert_eq!(&new_vvc.next(), &Some("-123".to_string()));
-        //! assert_eq!(&new_vvc.next(), &Some("+".to_string()));
-        //! assert_eq!(&new_vvc.next(), &Some("456".to_string()));
-        //! assert_eq!(&new_vvc.next(), &None);
+        //! assert_eq!(new_vvc.next(), Some("-123".to_string()));
+        //! assert_eq!(new_vvc.next(), Some("+".to_string()));
+        //! assert_eq!(new_vvc.next(), Some("456".to_string()));
+        //! assert_eq!(new_vvc.next(), None);
         //! ```
         self.count += 1;
 
@@ -85,8 +85,8 @@ impl Iterator for Vvc {
         //! ```
         //! let test_text = "-123 + 456".to_string();
         //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text);
-        //! assert_eq!(&new_vvc.nth(1), &Some("+".to_string()));
-        //! assert_eq!(&new_vvc.nth(3), &None);
+        //! assert_eq!(new_vvc.nth(1), Some("+".to_string()));
+        //! assert_eq!(new_vvc.nth(3), None);
         //! ```
         if n < self.attr.len() {
             Some(chars_to_string(&(self.attr[n])))

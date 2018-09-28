@@ -8,12 +8,20 @@ In my image, a grain of rice is `char`.
 And what collected them is `chars`. 
 And the seasoning of it is each structure of `onigiri::tools`.
 
+##### Sep 28 2018
 
-Sep 13 2018, I remove some structs.
+I add new validator `is_calc_operator` and add derive `PartialEq` to 
+struct `Vvc`
+
+##### Sep 13 2018
+
+I remove some structs.
 Instead of them, I added new function `cast`.
 
 
-Sep 3 2018, I add new struct Vvc.
+##### Sep 3 2018
+
+I add new struct Vvc.
 However, I didn't changed the previous functions.
 Although it may be a few, someone may already be using it.
 I'm doing my best to develop that it can be used more easily and clearly.
@@ -24,7 +32,7 @@ You add onigiri in Cargo.toml.
 
 ```
 [dependencies]
-onigiri = "0.1.6"
+onigiri = "0.1.7"
 ```
 example is as follows.
 
