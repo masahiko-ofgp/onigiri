@@ -8,7 +8,6 @@ use std::str::FromStr;
 
 pub fn chars_to_string(chars: &Vec<char>) -> String {
     //! Convert from `Vec<char>` to `String`.
-    //! This function is used in N* and Literal.
     //! ```
     //! let chars: Vec<char> = vec!['-', '1', '2', '3'];
     //! assert_eq!(
