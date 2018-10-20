@@ -37,7 +37,7 @@ You add onigiri in Cargo.toml.
 
 ```
 [dependencies]
-onigiri = "0.1.7"
+onigiri = "0.1.8"
 ```
 example is as follows.
 
