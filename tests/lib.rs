@@ -39,3 +39,13 @@ fn test_create_new_vvc_and_test_iterate() {
     assert_eq!(new_vvc.nth(1), Some("+".to_string()));
     assert_eq!(new_vvc.nth(3), None);
 }
+
+#[test]
+fn test_create_and_handle_btreemap() {
+    let test_text = "(1 - 23)".to_string();
+    let new_vvc = tools::Vvc::new(&test_text);
+    let new_btm = &new_vvc.create_btm().unwrap();
+    let first = new_btm.get(&0).unwrap();
+    let l_paren = &first[0];
+    assert_eq!(l_paren, &'(');
+}

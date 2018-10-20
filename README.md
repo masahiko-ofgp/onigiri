@@ -8,6 +8,10 @@ In my image, a grain of rice is `char`.
 And what collected them is `chars`. 
 And the seasoning of it is each structure of `onigiri::tools`.
 
+##### Oct 20 2018
+
+I add new function `create_btm`.
+
 ##### Sep 28 2018
 
 I add new validator `is_calc_operator` and add derive `PartialEq` to 
@@ -17,7 +21,6 @@ struct `Vvc`
 
 I remove some structs.
 Instead of them, I added new function `cast`.
-
 
 ##### Sep 3 2018
 

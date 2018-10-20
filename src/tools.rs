@@ -1,9 +1,9 @@
 //! `onigiri::tools` contains some tools of handling chars. 
 ///
-/// Sep 13 2018, I removed some structs.
-/// Instead of them, I added new function `cast`.
+/// 2018 Oct 20, I added new function `create_btm`.
 
 use std::str::FromStr;
+use std::collections::BTreeMap;
 
 
 pub fn chars_to_string(chars: &Vec<char>) -> String {
@@ -55,6 +55,32 @@ impl Vvc {
         //! assert_eq!(&new_vvc.attr, &vec![vec!['-','1','2','3']]);
         //! ```
         Vvc { attr: create_vvchar(&attr), count: 0 }
+    }
+    // TODO: I think this function is useful.
+    // But this one may be wasteful.
+    pub fn create_btm(self) -> Option<BTreeMap<usize, Vec<char>>> {
+        //! This function is create BTreeMap of `Vec<char>`.
+        //! Perhaps, this one may be more convenient.
+        //! ```
+        //! let test_text = "-123 456".to_string();
+        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text);
+        //! let btm = &new_vvc.create_btm().unwrap();
+        //! assert_eq!(
+        //!     btm.get(&0).unwrap(),
+        //!     &vec!['-', '1', '2', '3']
+        //! );
+        //! assert_eq!(
+        //!     btm.get(&1).unwrap(),
+        //!     &vec!['4', '5', '6']
+        //! );
+        //! ``` 
+        let mut bt = BTreeMap::new();
+        for (k, v) in self.attr.into_iter().enumerate() {
+            bt.insert(k,v);
+        }
+        if bt.is_empty() {
+            None
+        } else { Some(bt) }
     }
 }
 
