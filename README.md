@@ -1,5 +1,7 @@
 # onigiri
 
+[![Build Status](https://travis-ci.org/masahiko-ofgp/onigiri.svg?branch=master)](https://travis-ci.org/masahiko-ofgp/onigiri)
+
 ![onigiri](./imgs/onigiri2.png)
 
 onigiri is the tool of handling `chars` in Rust.
