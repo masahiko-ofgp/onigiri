@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/masahiko-ofgp/onigiri.svg?branch=master)](https://travis-ci.org/masahiko-ofgp/onigiri)
 
-![onigiri](./imgs/onigiri2.png)
+<img src="./imgs/onigiri2.png" width=60% alt="onigiri">
 
 onigiri is the tool of handling `chars` in Rust.
 The japanese name of rice ball is "Onigiri". 
