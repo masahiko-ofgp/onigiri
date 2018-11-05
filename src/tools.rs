@@ -1,6 +1,6 @@
 //! `onigiri::tools` contains some tools of handling chars. 
 ///
-/// 2018 Oct 20, I added new function `create_btm`.
+/// 2018 Nov 5, I add new function "search_all"
 
 use std::str::FromStr;
 use std::collections::BTreeMap;
@@ -37,7 +37,7 @@ pub fn create_vvchar(text: &String) -> Vec<Vec<char>>{
 }
 
 // Vvc is abbreviation of Vec<Vec<char>>.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Vvc {
     pub attr: Vec<Vec<char>>,
     count: usize
@@ -81,6 +81,30 @@ impl Vvc {
         if bt.is_empty() {
             None
         } else { Some(bt) }
+    }
+    pub fn search_all(self, word: String) -> Option<Vec<usize>> {
+        //! This function can search a word. And return index.
+        //! ```
+        //! extern crate onigiri;
+        //! use onigiri::tools::Vvc;
+        //! let result = Vvc::search_all(
+        //!     Vvc::new(&"Hello world Hello".to_string()),
+        //!     "Hello".to_string()
+        //! );
+        //! assert_eq!(result, Some(vec![0, 2]));
+        //! ```
+        let base_btm = &self.create_btm().unwrap();
+        let word_vc: Vec<char> = word.chars().collect();
+        let mut stack: Vec<usize> = vec![];
+        for k in 0..base_btm.len() {
+            if base_btm.get(&k).unwrap() == &word_vc {
+                stack.push(k);
+            } else { continue; }
+        }
+        match stack.len() {
+            0 => None,
+            _ => Some(stack)
+        }
     }
 }
 
@@ -136,3 +160,5 @@ pub fn cast<T: FromStr>(vc: &Vec<char>) -> Option<T> {
         _ => None
     }
 }
+
+

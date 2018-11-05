@@ -8,7 +8,10 @@ onigiri is the tool of handling `chars` in Rust.
 The japanese name of rice ball is "Onigiri". 
 In my image, a grain of rice is `char`. 
 And what collected them is `chars`. 
-And the seasoning of it is each structure of `onigiri::tools`.
+
+##### Nov 5 2018
+
+I add new function `search_all`.
 
 ##### Oct 20 2018
 
@@ -37,7 +40,7 @@ You add onigiri in Cargo.toml.
 
 ```
 [dependencies]
-onigiri = "0.1.8"
+onigiri = "0.1.9"
 ```
 example is as follows.
 
