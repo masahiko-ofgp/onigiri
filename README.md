@@ -9,6 +9,10 @@ The japanese name of rice ball is "Onigiri".
 In my image, a grain of rice is `char`. 
 And what collected them is `chars`. 
 
+##### Dec 9 2018
+
+I add new validator `is_number`.
+
 ##### Nov 5 2018
 
 I add new function `search_all`.
@@ -40,7 +44,7 @@ You add onigiri in Cargo.toml.
 
 ```
 [dependencies]
-onigiri = "0.1.9"
+onigiri = "0.1.10"
 ```
 example is as follows.
 

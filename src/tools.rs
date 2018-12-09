@@ -4,7 +4,7 @@
 
 use std::str::FromStr;
 use std::collections::BTreeMap;
-
+use onigiri::validator;
 
 pub fn chars_to_string(chars: &Vec<char>) -> String {
     //! Convert from `Vec<char>` to `String`.
@@ -154,10 +154,14 @@ pub fn cast<T: FromStr>(vc: &Vec<char>) -> Option<T> {
     //!     Some(-12_i32)
     //! );
     //! ```
-    let vc2s = chars_to_string(&vc);
-    match T::from_str(&vc2s) {
-        Ok(n) => Some(n),
-        _ => None
+    if validator::is_number(&vc) {
+        let vc2s = chars_to_string(&vc);
+        match T::from_str(&vc2s) {
+            Ok(n) => Some(n),
+            _ => None
+        }
+    } else {
+        None
     }
 }
 

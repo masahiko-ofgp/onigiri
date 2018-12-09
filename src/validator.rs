@@ -1,4 +1,37 @@
-//! onigiri::validator contains 4 functions for validating `Vec<char>`.
+//! onigiri::validator contains 5 functions for validating `Vec<char>`.
+
+pub fn is_number(vc: &Vec<char>) -> bool {
+    //! Validate `Vec<char>` whether it is number.
+    //! ```
+    //! let test_chars_1 = vec!['1', '2'];
+    //! let test_chars_2 = vec!['-', '1'];
+    //! let test_chars_3 = vec!['-', 'a'];
+    //! assert_eq!(
+    //!     onigiri::validator::is_number(&test_chars_1), 
+    //!     true
+    //! );
+    //! assert_eq!(
+    //!     onigiri::validator::is_number(&test_chars_2),
+    //!     true
+    //! );
+    //! assert_eq!(
+    //!     onigiri::validator::is_number(&test_chars_3),
+    //!     false
+    //! );
+    let mut stack: Vec<bool> = vec![];
+
+    if is_positive_number(&vc) {
+        stack.push(true);
+    } else if is_negative_number(&vc) {
+        stack.push(true);
+    } else {
+        return false;
+    }
+
+    if stack.iter().all(|&r| r == true) {true}
+    else {false}
+
+}
 
 pub fn is_positive_number(vc: &Vec<char>) -> bool {
     //! Validate `Vec<char>` whether it is positive number.
