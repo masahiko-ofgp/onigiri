@@ -1,10 +1,10 @@
 //! `onigiri::tools` contains some tools of handling chars. 
 ///
-/// 2018 Nov 5, I add new function "search_all"
+/// This library is still under develop. 
 
 use std::str::FromStr;
 use std::collections::BTreeMap;
-use onigiri::validator;
+use super::validator;
 
 pub fn chars_to_string(chars: &Vec<char>) -> String {
     //! Convert from `Vec<char>` to `String`.
@@ -20,19 +20,20 @@ pub fn chars_to_string(chars: &Vec<char>) -> String {
     result
 }
 
-pub fn create_vvchar(text: &String) -> Vec<Vec<char>>{
+pub fn create_vvchar(text: &String, sep: char) -> Vec<Vec<char>>{
     //! This function convert from `String` to `Vec<Vec<char>>`.
     //! ```
     //! let text = "123 456".to_string();
     //! assert_eq!(
-    //!     onigiri::tools::create_vvchar(&text),
+    //!     onigiri::tools::create_vvchar(&text, ' '),
     //!     vec![vec!['1','2','3'], vec!['4','5','6']]
     //! );
     //! ```
-    let split_text: Vec<&str> = text.split_whitespace().collect();
-    let vvchar: Vec<Vec<char>> = split_text.iter()
+    let split_text: Vec<&str> = text.split(sep).collect();
+    let mut vvchar: Vec<Vec<char>> = split_text.iter()
         .map(|&x| x.chars().collect()).collect();
     
+    vvchar.shrink_to_fit();
     vvchar
 }
 
@@ -44,17 +45,17 @@ pub struct Vvc {
 }
 
 impl Vvc {
-    pub fn new(attr: &String) -> Vvc {
+    pub fn new(attr: &String, sep: char) -> Vvc {
         //! This function create `Vvc` from `String`.
         //! It is almost the same as `create_vvchar()`,
         //! but you can use `next()` and `nth()`.
         //! 
         //! ```
         //! let test_text = "-123".to_string();
-        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text);
+        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text, ' ');
         //! assert_eq!(&new_vvc.attr, &vec![vec!['-','1','2','3']]);
         //! ```
-        Vvc { attr: create_vvchar(&attr), count: 0 }
+        Vvc { attr: create_vvchar(&attr, sep), count: 0 }
     }
     // TODO: I think this function is useful.
     // But this one may be wasteful.
@@ -63,7 +64,7 @@ impl Vvc {
         //! Perhaps, this one may be more convenient.
         //! ```
         //! let test_text = "-123 456".to_string();
-        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text);
+        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text, ' ');
         //! let btm = &new_vvc.create_btm().unwrap();
         //! assert_eq!(
         //!     btm.get(&0).unwrap(),
@@ -88,7 +89,7 @@ impl Vvc {
         //! extern crate onigiri;
         //! use onigiri::tools::Vvc;
         //! let result = Vvc::search_all(
-        //!     Vvc::new(&"Hello world Hello".to_string()),
+        //!     Vvc::new(&"Hello world Hello".to_string(), ' '),
         //!     "Hello".to_string()
         //! );
         //! assert_eq!(result, Some(vec![0, 2]));
@@ -115,7 +116,7 @@ impl Iterator for Vvc {
     fn next(&mut self) -> Option<Self::Item> {
         //! ```
         //! let test_text = "-123 + 456".to_string();
-        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text);
+        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text, ' ');
         //! assert_eq!(new_vvc.next(), Some("-123".to_string()));
         //! assert_eq!(new_vvc.next(), Some("+".to_string()));
         //! assert_eq!(new_vvc.next(), Some("456".to_string()));
@@ -133,7 +134,7 @@ impl Iterator for Vvc {
     fn nth(&mut self, n: usize) -> Option<Self::Item> {
         //! ```
         //! let test_text = "-123 + 456".to_string();
-        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text);
+        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text, ' ');
         //! assert_eq!(new_vvc.nth(1), Some("+".to_string()));
         //! assert_eq!(new_vvc.nth(3), None);
         //! ```
@@ -164,5 +165,3 @@ pub fn cast<T: FromStr>(vc: &Vec<char>) -> Option<T> {
         None
     }
 }
-
-

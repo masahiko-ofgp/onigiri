@@ -7,7 +7,7 @@
 //! ```
 //! let test_text = "(13 + 2)".to_string();
 //!
-//! let new_vvchar = onigiri::tools::create_vvchar(&test_text);
+//! let new_vvchar = onigiri::tools::create_vvchar(&test_text, ' ');
 //! assert_eq!(&new_vvchar, &vec![vec!['(', '1','3'],vec!['+'],vec!['2', ')']]);
 //! let thirteen = &new_vvchar[0][1..].to_vec();
 //! assert_eq!(onigiri::validator::is_positive_number(&thirteen), true);

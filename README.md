@@ -11,6 +11,8 @@ And what collected them is `chars`.
 
 ##### Dec 9 2018
 
+Vvc make it possible to specify a separator.
+
 I add new validator `is_number`.
 
 ##### Nov 5 2018
