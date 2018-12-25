@@ -6,6 +6,7 @@ use std::str::FromStr;
 use std::collections::BTreeMap;
 use super::validator;
 
+
 pub fn chars_to_string(chars: &Vec<char>) -> String {
     //! Convert from `Vec<char>` to `String`.
     //! ```
@@ -15,15 +16,16 @@ pub fn chars_to_string(chars: &Vec<char>) -> String {
     //!     "-123".to_string());
     //! ```
     let vec_str: Vec<String> = chars.iter()
-        .map(|ref v| v.to_string()).collect();
+        .map(|ref v| v.to_string())
+        .collect();
     let result = vec_str.concat();
     result
 }
 
-pub fn create_vvchar(text: &String, sep: char) -> Vec<Vec<char>>{
-    //! This function convert from `String` to `Vec<Vec<char>>`.
+pub fn create_vvchar<'a>(text: &'a str, sep: char) -> Vec<Vec<char>> {
+    //! This function convert from `str` to `Vec<Vec<char>>`.
     //! ```
-    //! let text = "123 456".to_string();
+    //! let text = "123 456";
     //! assert_eq!(
     //!     onigiri::tools::create_vvchar(&text, ' '),
     //!     vec![vec!['1','2','3'], vec!['4','5','6']]
@@ -31,119 +33,11 @@ pub fn create_vvchar(text: &String, sep: char) -> Vec<Vec<char>>{
     //! ```
     let split_text: Vec<&str> = text.split(sep).collect();
     let mut vvchar: Vec<Vec<char>> = split_text.iter()
-        .map(|&x| x.chars().collect()).collect();
+        .map(|&x| x.chars().collect())
+        .collect();
     
     vvchar.shrink_to_fit();
     vvchar
-}
-
-// Vvc is abbreviation of Vec<Vec<char>>.
-#[derive(Debug, PartialEq, Clone)]
-pub struct Vvc {
-    pub attr: Vec<Vec<char>>,
-    count: usize
-}
-
-impl Vvc {
-    pub fn new(attr: &String, sep: char) -> Vvc {
-        //! This function create `Vvc` from `String`.
-        //! It is almost the same as `create_vvchar()`,
-        //! but you can use `next()` and `nth()`.
-        //! 
-        //! ```
-        //! let test_text = "-123".to_string();
-        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text, ' ');
-        //! assert_eq!(&new_vvc.attr, &vec![vec!['-','1','2','3']]);
-        //! ```
-        Vvc { attr: create_vvchar(&attr, sep), count: 0 }
-    }
-    // TODO: I think this function is useful.
-    // But this one may be wasteful.
-    pub fn create_btm(self) -> Option<BTreeMap<usize, Vec<char>>> {
-        //! This function is create BTreeMap of `Vec<char>`.
-        //! Perhaps, this one may be more convenient.
-        //! ```
-        //! let test_text = "-123 456".to_string();
-        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text, ' ');
-        //! let btm = &new_vvc.create_btm().unwrap();
-        //! assert_eq!(
-        //!     btm.get(&0).unwrap(),
-        //!     &vec!['-', '1', '2', '3']
-        //! );
-        //! assert_eq!(
-        //!     btm.get(&1).unwrap(),
-        //!     &vec!['4', '5', '6']
-        //! );
-        //! ``` 
-        let mut bt = BTreeMap::new();
-        for (k, v) in self.attr.into_iter().enumerate() {
-            bt.insert(k,v);
-        }
-        if bt.is_empty() {
-            None
-        } else { Some(bt) }
-    }
-    pub fn search_all(self, word: String) -> Option<Vec<usize>> {
-        //! This function can search a word. And return index.
-        //! ```
-        //! extern crate onigiri;
-        //! use onigiri::tools::Vvc;
-        //! let result = Vvc::search_all(
-        //!     Vvc::new(&"Hello world Hello".to_string(), ' '),
-        //!     "Hello".to_string()
-        //! );
-        //! assert_eq!(result, Some(vec![0, 2]));
-        //! ```
-        let base_btm = &self.create_btm().unwrap();
-        let word_vc: Vec<char> = word.chars().collect();
-        let mut stack: Vec<usize> = vec![];
-        for k in 0..base_btm.len() {
-            if base_btm.get(&k).unwrap() == &word_vc {
-                stack.push(k);
-            } else { continue; }
-        }
-        match stack.len() {
-            0 => None,
-            _ => Some(stack)
-        }
-    }
-}
-
-// This iterator iterates over Vec<Vec<char>> converted to String.
-impl Iterator for Vvc {
-    type Item = String;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        //! ```
-        //! let test_text = "-123 + 456".to_string();
-        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text, ' ');
-        //! assert_eq!(new_vvc.next(), Some("-123".to_string()));
-        //! assert_eq!(new_vvc.next(), Some("+".to_string()));
-        //! assert_eq!(new_vvc.next(), Some("456".to_string()));
-        //! assert_eq!(new_vvc.next(), None);
-        //! ```
-        self.count += 1;
-
-        if self.count <= self.attr.len() {
-            Some(chars_to_string(&(self.attr[self.count - 1])))
-        } else {
-            None
-        }
-    }
-    
-    fn nth(&mut self, n: usize) -> Option<Self::Item> {
-        //! ```
-        //! let test_text = "-123 + 456".to_string();
-        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text, ' ');
-        //! assert_eq!(new_vvc.nth(1), Some("+".to_string()));
-        //! assert_eq!(new_vvc.nth(3), None);
-        //! ```
-        if n < self.attr.len() {
-            Some(chars_to_string(&(self.attr[n])))
-        } else {
-            None
-        }
-    }
 }
 
 pub fn cast<T: FromStr>(vc: &Vec<char>) -> Option<T> {
@@ -154,8 +48,13 @@ pub fn cast<T: FromStr>(vc: &Vec<char>) -> Option<T> {
     //!     onigiri::tools::cast::<i32>(&test_vc),
     //!     Some(-12_i32)
     //! );
+    //! let test_float_vc = vec!['0', '.', '1', '2'];
+    //! assert_eq!(
+    //!     onigiri::tools::cast::<f64>(&test_float_vc),
+    //!     Some(0.12_f64)
+    //! );
     //! ```
-    if validator::is_number(&vc) {
+    if validator::is_integer(&vc)|validator::is_float(&vc) {
         let vc2s = chars_to_string(&vc);
         match T::from_str(&vc2s) {
             Ok(n) => Some(n),
@@ -163,5 +62,71 @@ pub fn cast<T: FromStr>(vc: &Vec<char>) -> Option<T> {
         }
     } else {
         None
+    }
+}
+
+pub fn search_all(btmvc: &BTreeMap<usize, Vec<char>>, word: String) -> Option<Vec<usize>> {
+    //! This function can search a word. And return index for `BTreeMap<usize, Vec<char>>`.
+    //! ```
+    //! use onigiri::tools;
+    //!
+    //! let new_vvc = tools::Vvc::new(&"Hello world Hello", ' ');
+    //! let btm = &new_vvc.to_btm().unwrap();
+    //! let result = tools::search_all(&btm, "Hello".to_string());
+    //! assert_eq!(result, Some(vec![0, 2]));
+    //! ```
+    let word_vc: Vec<char> = word.chars().collect();
+    let mut stack: Vec<usize> = vec![];
+    for k in 0..btmvc.len() {
+        if btmvc.get(&k).unwrap() == &word_vc {
+            stack.push(k);
+        } else { continue; }
+    }
+    match stack.len() {
+        0 => None,
+        _ => Some(stack)
+    }
+}
+
+// Vvc is abbreviation of Vec<Vec<char>>.
+#[derive(Debug, PartialEq, Clone)]
+pub struct Vvc {
+    pub attr: Vec<Vec<char>>
+}
+
+impl Vvc {
+    pub fn new<'a>(attr: &'a str, sep: char) -> Vvc {
+        //! This function create `Vvc` from `str`.
+        //! It is almost the same as `create_vvchar()`,
+        //! 
+        //! ```
+        //! let test_text = "-123";
+        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text, ' ');
+        //! assert_eq!(&new_vvc.attr, &vec![vec!['-','1','2','3']]);
+        //! ```
+        Vvc { attr: create_vvchar(&attr, sep) }
+    }
+    pub fn to_btm(&self) -> Option<BTreeMap<usize, Vec<char>>> {
+        //! This function is create BTreeMap of `Vec<char>`.
+        //! ```
+        //! let test_text = "-123 456";
+        //! let mut new_vvc = onigiri::tools::Vvc::new(&test_text, ' ');
+        //! let btm = &new_vvc.to_btm().unwrap();
+        //! assert_eq!(
+        //!     btm.get(&0).unwrap(),
+        //!     &vec!['-', '1', '2', '3']
+        //! );
+        //! assert_eq!(
+        //!     btm.get(&1).unwrap(),
+        //!     &vec!['4', '5', '6']
+        //! );
+        //! ``` 
+        let mut bt = BTreeMap::new();
+        for (k, v) in self.attr.iter().enumerate() {
+            bt.insert(k,v.to_vec());
+        }
+        if bt.is_empty() {
+            None
+        } else { Some(bt) }
     }
 }

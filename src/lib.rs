@@ -5,12 +5,12 @@
 //! Some examples are as follows.
 //!
 //! ```
-//! let test_text = "(13 + 2)".to_string();
+//! let test_text = "(13 + 2)";
 //!
 //! let new_vvchar = onigiri::tools::create_vvchar(&test_text, ' ');
 //! assert_eq!(&new_vvchar, &vec![vec!['(', '1','3'],vec!['+'],vec!['2', ')']]);
 //! let thirteen = &new_vvchar[0][1..].to_vec();
-//! assert_eq!(onigiri::validator::is_positive_number(&thirteen), true);
+//! assert_eq!(onigiri::validator::is_positive_integer(&thirteen), true);
 //!
 //! let num = onigiri::tools::cast::<u8>(&thirteen);
 //! assert_eq!(&num, &Some(13_u8));

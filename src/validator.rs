@@ -1,28 +1,29 @@
-//! onigiri::validator contains 5 functions for validating `Vec<char>`.
+//! onigiri::validator contains some functions for validating `Vec<char>`.
 
-pub fn is_number(vc: &Vec<char>) -> bool {
-    //! Validate `Vec<char>` whether it is number.
+
+pub fn is_integer(vc: &Vec<char>) -> bool {
+    //! Validate `Vec<char>` whether it is integer.
     //! ```
     //! let test_chars_1 = vec!['1', '2'];
     //! let test_chars_2 = vec!['-', '1'];
     //! let test_chars_3 = vec!['-', 'a'];
     //! assert_eq!(
-    //!     onigiri::validator::is_number(&test_chars_1), 
+    //!     onigiri::validator::is_integer(&test_chars_1), 
     //!     true
     //! );
     //! assert_eq!(
-    //!     onigiri::validator::is_number(&test_chars_2),
+    //!     onigiri::validator::is_integer(&test_chars_2),
     //!     true
     //! );
     //! assert_eq!(
-    //!     onigiri::validator::is_number(&test_chars_3),
+    //!     onigiri::validator::is_integer(&test_chars_3),
     //!     false
     //! );
     let mut stack: Vec<bool> = vec![];
 
-    if is_positive_number(&vc) {
+    if is_positive_integer(&vc) {
         stack.push(true);
-    } else if is_negative_number(&vc) {
+    } else if is_negative_integer(&vc) {
         stack.push(true);
     } else {
         return false;
@@ -33,59 +34,165 @@ pub fn is_number(vc: &Vec<char>) -> bool {
 
 }
 
-pub fn is_positive_number(vc: &Vec<char>) -> bool {
-    //! Validate `Vec<char>` whether it is positive number.
+pub fn is_positive_integer(vc: &Vec<char>) -> bool {
+    //! Validate `Vec<char>` whether it is positive integer.
     //! ```
     //! let test_chars_1 = vec!['1', '2', '3'];
     //! let test_chars_2 = vec!['2', '+', '1'];
     //! let test_chars_3 = vec!['-', '1', '2'];
     //!
     //! assert_eq!(
-    //!     onigiri::validator::is_positive_number(&test_chars_1), true);
+    //!     onigiri::validator::is_positive_integer(&test_chars_1), true);
     //! assert_eq!(
-    //!     onigiri::validator::is_positive_number(&test_chars_2), false);
+    //!     onigiri::validator::is_positive_integer(&test_chars_2), false);
     //! assert_eq!(
-    //!     onigiri::validator::is_positive_number(&test_chars_3), false);
+    //!     onigiri::validator::is_positive_integer(&test_chars_3), false);
     //! ```
-    let mut stack: Vec<bool> = vec![];
-    for v in vc {
-        match &v {
-            '0' ... '9' => stack.push(true),
-            _ => stack.push(false)
+    let mut iter = vc.iter().peekable();
+
+    loop {
+        match iter.next() {
+            Some(p) => match Some(p).unwrap() {
+                '0'...'9' => continue,
+                _ => return false
+            },
+            None => break
         }
     }
-    if stack.iter().all(|&x| x == true) { true }
-    else { false }
+    true
 }
 
-pub fn is_negative_number(vc: &Vec<char>) -> bool {
-    //! Validate `Vec<char>` whether it is negative number.
+pub fn is_negative_integer(vc: &Vec<char>) -> bool {
+    //! Validate `Vec<char>` whether it is negative integer.
     //! ```
     //! let test_chars_1 = vec!['1', '2', '3'];
     //! let test_chars_2 = vec!['-', '2', '1'];
     //! let test_chars_3 = vec!['2', '-', '1'];
     //! assert_eq!(
-    //!     onigiri::validator::is_negative_number(&test_chars_1), false);
+    //!     onigiri::validator::is_negative_integer(&test_chars_1), false);
     //! assert_eq!(
-    //!     onigiri::validator::is_negative_number(&test_chars_2), true);
+    //!     onigiri::validator::is_negative_integer(&test_chars_2), true);
     //! assert_eq!(
-    //!     onigiri::validator::is_negative_number(&test_chars_3), false);
+    //!     onigiri::validator::is_negative_integer(&test_chars_3), false);
     //! ```
     let head = &vc[0];
     let tail = &vc[1..];
-    let mut stack: Vec<bool> = vec![];
-    
+
     if head == &'-' {
-        stack.push(true)
+        if is_positive_integer(&tail.to_vec()) == true {
+            true
+        } else {
+            false
+        }
     } else {
-        stack.push(false)
+        false
+    }
+}
+
+pub fn is_float(vc: &Vec<char>) -> bool {
+    //! Validate `Vec<char>` whether it is float.
+    //! ```
+    //! let test_float1 = vec!['1', '.', '2'];
+    //! let test_float2 = vec!['-', '1', '.', '2'];
+    //! let test_float3 = vec!['0', '.', '5', '.'];
+    //! assert_eq!(
+    //!     onigiri::validator::is_float(&test_float1), 
+    //!     true
+    //! );
+    //! assert_eq!(
+    //!     onigiri::validator::is_float(&test_float2),
+    //!     true
+    //! );
+    //! assert_eq!(
+    //!     onigiri::validator::is_float(&test_float3),
+    //!     false
+    //! );
+    //! ```
+    let mut stack: Vec<bool> = vec![];
+
+    if is_positive_float(&vc) {
+        stack.push(true);
+    } else if is_negative_float(&vc) {
+        stack.push(true);
+    } else {
+        return false;
     }
 
-    let result_tail = is_positive_number(&tail.to_vec());
-    stack.push(result_tail);
+    if stack.iter().all(|&r| r == true) {true}
+    else {false}
 
-    if stack.iter().all(|&x| x == true) { true }
-    else { false }
+}
+
+pub fn is_positive_float(vc: &Vec<char>) -> bool {
+    //! Validate `Vec<char>` whether it is positive float.
+    //! ```
+    //! let test_float = vec!['0', '.', '1', '2'];
+    //! let test_float2 = vec!['0', '.', '.', '1'];
+    //! let test_float3 = vec!['-', '0', '.', '1'];
+    //! assert_eq!(
+    //!     onigiri::validator::is_positive_float(&test_float),
+    //!     true
+    //! );
+    //! assert_eq!(
+    //!     onigiri::validator::is_positive_float(&test_float2),
+    //!     false
+    //! );
+    //! assert_eq!(
+    //!     onigiri::validator::is_positive_float(&test_float3),
+    //!     false
+    //! );
+    //! ```
+    let mut iter = vc.iter().peekable();
+    let mut count: usize = 0;
+    let mut stack: Vec<bool> = vec![];
+
+    loop {
+        match iter.next() {
+            Some(i) => match Some(i).unwrap() {
+                '.' => count += 1,
+                '0'...'9' => stack.push(true),
+                _ => stack.push(false)
+            },
+            None => break
+        }
+    }
+    if count == 1_usize {
+        if stack.iter().all(|&r| r == true) {
+            true 
+        } else {
+            false
+        }
+    } else {
+        false
+    }
+}
+
+pub fn is_negative_float(vc: &Vec<char>) -> bool {
+    //! Validate `Vec<char>` whether it is negative float.
+    //! ```
+    //! let test_float = vec!['0', '.', '1', '2'];
+    //! let test_float2 = vec!['-', '0', '.', '1'];
+    //! assert_eq!(
+    //!     onigiri::validator::is_negative_float(&test_float),
+    //!     false
+    //! );
+    //! assert_eq!(
+    //!     onigiri::validator::is_negative_float(&test_float2),
+    //!     true
+    //! );
+    //! ```
+    let head = &vc[0];
+    let tail = &vc[1..];
+
+    if head == &'-' {
+        if is_positive_float(&tail.to_vec()) == true {
+            true
+        } else {
+            false
+        }
+    } else {
+        false
+    }
 }
 
 pub fn is_symbol(vc: &Vec<char>) -> bool {
@@ -113,35 +220,6 @@ pub fn is_symbol(vc: &Vec<char>) -> bool {
             'a' ... 'z' => false,
             'A' ... 'Z' => false,
             _ => true
-        }
-    } else {
-        false
-    }
-}
-
-pub fn is_calc_operator(vc: &Vec<char>) -> bool {
-    //! Validate `Vec<char>` whether it is calc_operator.
-    //! ```
-    //! let test_vc = vec!['+'];
-    //! assert_eq!(
-    //!     onigiri::validator::is_calc_operator(&test_vc),
-    //!     true
-    //! );
-    //! let test_vc_2 = vec!['2'];
-    //! assert_eq!(
-    //!     onigiri::validator::is_calc_operator(&test_vc_2),
-    //!     false
-    //! );
-    //! let test_vc_3 = vec!['+', '+'];
-    //! assert_eq!(
-    //!     onigiri::validator::is_calc_operator(&test_vc_3),
-    //!     false
-    //! );
-    //! ```
-    if is_symbol(&vc) {
-        match &vc[0] {
-            '+'|'-'|'*'|'/' => true,
-            _ => false
         }
     } else {
         false
