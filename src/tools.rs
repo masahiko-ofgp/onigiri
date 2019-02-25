@@ -87,7 +87,7 @@ pub struct Vvc {
 impl Vvc {
 	/// This function create `Vvc` from `str`.
 	/// It is almost the same as `create_vvchar()`,
-	///      
+	///
     ///     use onigiri::tools::Vvc;
     ///     
 	///     let test_text = "-123".to_string();
@@ -97,7 +97,7 @@ impl Vvc {
     ///         &new_vvc.attr, 
     ///         &vec![vec!['-','1','2','3']]
     ///     );
-	///     
+	///
 	pub fn new<'a>(attr: &'a str, sep: char) -> Vvc { 
         let split_text: Vec<&str> = attr.split(sep).collect();
         let mut vvchar: Vec<Vec<char>> = split_text.iter()
@@ -109,7 +109,7 @@ impl Vvc {
     }
 
 	/// This function is create BTreeMap of `Vec<char>`.
-	///     
+	///
     ///     use onigiri::tools::Vvc;
     ///     
 	///     let test_text = "-123 456".to_string();
@@ -125,7 +125,7 @@ impl Vvc {
 	///         btm.get(&1).unwrap(),
 	///         &vec!['4', '5', '6']
 	///     );
-	///     
+	/// 
     pub fn to_btm(&self) -> Option<BTreeMap<usize, Vec<char>>> {
         let mut bt = BTreeMap::new();
         for (k, v) in self.attr.iter().enumerate() {
