@@ -1,28 +1,27 @@
-extern crate onigiri;
 use onigiri::{tools, validator};
 
 #[test]
 fn test_each_tools() {
     let test_text = "-123 + 456";
-    let new_vvchar = tools::create_vvchar(&test_text, ' ');
+    let new_vvchar = tools::Vvc::new(&test_text, ' ');
 
     // "-123" is negative integer.
-    assert_eq!(validator::is_positive_integer(&new_vvchar[0]), false);
-    assert_eq!(validator::is_negative_integer(&new_vvchar[0]), true);
-    assert_eq!(validator::is_symbol(&new_vvchar[0]), false);
+    assert_eq!(validator::is_positive_integer(&new_vvchar.attr[0]), false);
+    assert_eq!(validator::is_negative_integer(&new_vvchar.attr[0]), true);
+    assert_eq!(validator::is_punctuation(&new_vvchar.attr[0]), false);
 
     // "+" is symbol.
-    assert_eq!(validator::is_positive_integer(&new_vvchar[1]), false);
-    assert_eq!(validator::is_negative_integer(&new_vvchar[1]), false);
-    assert_eq!(validator::is_symbol(&new_vvchar[1]), true);
+    assert_eq!(validator::is_positive_integer(&new_vvchar.attr[1]), false);
+    assert_eq!(validator::is_negative_integer(&new_vvchar.attr[1]), false);
+    assert_eq!(validator::is_punctuation(&new_vvchar.attr[1]), true);
 
     // "456" is positive integer.
-    assert_eq!(validator::is_positive_integer(&new_vvchar[2]), true);
-    assert_eq!(validator::is_negative_integer(&new_vvchar[2]), false);
-    assert_eq!(validator::is_symbol(&new_vvchar[2]), false);
+    assert_eq!(validator::is_positive_integer(&new_vvchar.attr[2]), true);
+    assert_eq!(validator::is_negative_integer(&new_vvchar.attr[2]), false);
+    assert_eq!(validator::is_punctuation(&new_vvchar.attr[2]), false);
 
     // "-123" => -123_i32.
-    let new_i32 = tools::cast::<i32>(&new_vvchar[0]);
+    let new_i32 = tools::cast::<i32>(&new_vvchar.attr[0]);
     assert_eq!(&new_i32, &Some(-123_i32));
     assert_eq!(&new_i32.unwrap() + 123, 0_i32);
 }

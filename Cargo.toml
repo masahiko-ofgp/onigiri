@@ -1,6 +1,6 @@
 [package]
 name = "onigiri"
-version = "0.1.11"
+version = "0.1.12"
 authors = ["Masahiko Hamazawa <ichigyo.zanmai@gmail.com>"]
 repository = "https://github.com/masahiko-ofgp/onigiri"
 license = "MIT"
@@ -10,4 +10,5 @@ keywords = ["onigiri", "chars"]
 description = """
 This crate is a tool of handling chars.
 """
+
 [dependencies]
