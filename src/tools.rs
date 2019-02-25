@@ -1,3 +1,10 @@
+// Copyright 2019 onigiri.rs Masahiko Hamazawa
+//
+// Licensed under the MIT license <LICENSE or
+//  http://opensource/licenses/MIT>.
+// This file may not be copied, modified, on distributed except
+//  according to those terms.
+
 //! `onigiri::tools` contains some tools of handling chars. 
 
 use std::str::{FromStr, from_utf8};
