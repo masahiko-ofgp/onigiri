@@ -1,6 +1,6 @@
 [package]
 name = "onigiri"
-version = "0.1.12"
+version = "0.1.13"
 authors = ["Masahiko Hamazawa <ichigyo.zanmai@gmail.com>"]
 repository = "https://github.com/masahiko-ofgp/onigiri"
 license = "MIT"

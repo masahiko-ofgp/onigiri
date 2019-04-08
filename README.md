@@ -9,11 +9,18 @@ The japanese name of rice ball is "Onigiri".
 In my image, a grain of rice is `char`. 
 And what collected them is `chars`. 
 
+##### April 8 2019
+
+Add 
+- `validator::is_lower_ascii`
+- `validator::is_upper_ascii`
+- `validator::is_title`
+
 ##### Feb 25 2019
 
-Removed `tools/create_vvchar`.
+Removed `tools::create_vvchar`.
 
-Renamed `validator/is_symbol` -> `validator/is_punctuation`
+Renamed `validator::is_symbol` -> `validator::is_punctuation`
 
 Modified DocComment and DocTest.
 
@@ -42,7 +49,7 @@ You add onigiri in Cargo.toml.
 
 ```
 [dependencies]
-onigiri = "0.1.12"
+onigiri = "0.1.13"
 ```
 example is as follows.
 

@@ -1,4 +1,4 @@
-// Copyright 2019 onigiri.rs Masahiko Hamazawa
+// Copyright 2019 Masahiko Hamazawa
 //
 // Licensed under the MIT license <LICENSE or
 //  http://opensource.org/licenses/MIT>.
@@ -29,13 +29,8 @@
 ///     );
 ///
 pub fn is_integer(vc: &Vec<char>) -> bool {
-    if is_positive_integer(&vc) {
-        return true;
-    } else if is_negative_integer(&vc) {
-        return true;
-    } else {
-        return false;
-    }
+    (is_positive_integer(&vc) == true)|
+        (is_negative_integer(&vc) == true)
 }
 
 /// Validate `Vec<char>` whether it is positive integer.
@@ -134,13 +129,8 @@ pub fn is_negative_integer(vc: &Vec<char>) -> bool {
 ///     );
 /// 
 pub fn is_float(vc: &Vec<char>) -> bool {
-    if is_positive_float(&vc) {
-        return true;
-    } else if is_negative_float(&vc) {
-        return true;
-    } else {
-        return false;
-    }
+    (is_positive_float(&vc) == true)|
+        (is_negative_float(&vc) == true)
 }
 
 
@@ -263,4 +253,115 @@ pub fn is_punctuation(vc: &Vec<char>) -> bool {
         }
     }
     true
+}
+
+
+/// Validate `Vec<char>` whether it is all ascii-lowercase.
+///
+///     use onigiri::validator::is_lower_ascii;
+///     
+///     let test_vc = vec!['h', 'e', 'l', 'l', 'o'];
+///     let test_vc2 = vec!['H', 'e', 'l', 'l', 'o'];
+///     let test_vc3 = vec!['1', '2', 'a'];
+///     
+///     assert_eq!(
+///         is_lower_ascii(&test_vc),
+///         true
+///     );
+///
+///     assert_eq!(
+///         is_lower_ascii(&test_vc2),
+///         false
+///     );
+///
+///     assert_eq!(
+///         is_lower_ascii(&test_vc3),
+///         false
+///     );
+///
+pub fn is_lower_ascii(vc: &Vec<char>) -> bool {
+    let mut iter = vc.iter().peekable();
+
+    loop {
+        match iter.next() {
+            Some(l) => if l.is_ascii_lowercase() {
+                continue;
+            } else {
+                return false;
+            },
+            None => break,
+        }
+    }
+    true
+}
+
+/// Validate `Vec<char>` whether it is all ascii-uppercase.
+///
+///     use onigiri::validator::is_upper_ascii;
+///     
+///     let test_vc = vec!['h', 'e', 'l', 'l', 'o'];
+///     let test_vc2 = vec!['H', 'E', 'L', 'L', 'O'];
+///     let test_vc3 = vec!['1', '2', 'a'];
+///     
+///     assert_eq!(
+///         is_upper_ascii(&test_vc),
+///         false
+///     );
+///
+///     assert_eq!(
+///         is_upper_ascii(&test_vc2),
+///         true
+///     );
+///
+///     assert_eq!(
+///         is_upper_ascii(&test_vc3),
+///         false
+///     );
+///     
+pub fn is_upper_ascii(vc: &Vec<char>) -> bool {
+    let mut iter = vc.iter().peekable();
+
+    loop {
+        match iter.next() {
+            Some(l) => if l.is_ascii_uppercase() {
+                continue;
+            } else {
+                return false;
+            },
+            None => break,
+        }
+    }
+    true
+}
+
+
+/// Validate `Vec<char>` whether it is title case.
+///
+///     use onigiri::validator::is_title;
+///
+///     let test_vc = vec!['H', 'e', 'l', 'l', 'o'];
+///     let test_vc2 = vec!['h', 'E', 'l', 'L', 'O'];
+///
+///     assert_eq!(
+///         is_title(&test_vc),
+///         true
+///     );
+///
+///     assert_eq!(
+///         is_title(&test_vc2),
+///         false
+///     );
+///
+pub fn is_title(vc: &Vec<char>) -> bool {
+    let head = &vc[0];
+    let tail = &vc[1..];
+
+    match head {
+        'A' ... 'Z' => if is_lower_ascii(&tail.to_vec()) {
+            true
+        } else {
+            false
+        },
+        _ => false
+    }
 }

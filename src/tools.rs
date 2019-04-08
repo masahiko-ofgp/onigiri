@@ -1,4 +1,4 @@
-// Copyright 2019 onigiri.rs Masahiko Hamazawa
+// Copyright 2019 Masahiko Hamazawa
 //
 // Licensed under the MIT license <LICENSE or
 //  http://opensource/licenses/MIT>.
@@ -73,9 +73,9 @@ pub fn cast<T: FromStr>(vc: &Vec<char>) -> Option<T> {
 pub fn search_all(btmvc: &BTreeMap<usize, Vec<char>>, word: String) -> Option<Vec<usize>> {
     let word_vc: Vec<char> = word.chars().collect();
     let mut stack: Vec<usize> = vec![];
-    for k in 0..btmvc.len() {
+    for k in btmvc.keys() {
         if btmvc.get(&k).unwrap() == &word_vc {
-            stack.push(k);
+            stack.push(*k);
         } else { continue; }
     }
     match stack.len() {

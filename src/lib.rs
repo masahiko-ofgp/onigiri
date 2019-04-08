@@ -1,4 +1,4 @@
-// Copyright 2019 onigiri.rs Masahiko Hamazawa
+// Copyright 2019 Masahiko Hamazawa
 //
 // Licensed under the MIT license <LICENSE or
 //  http://opensource.org/licenses/MIT>.
