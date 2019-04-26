@@ -6,7 +6,8 @@ repository = "https://github.com/masahiko-ofgp/onigiri"
 license = "MIT"
 edition = "2018"
 readme = "README.md"
-keywords = ["onigiri", "chars"]
+keywords = ["onigiri", "chars", "vec", "vector"]
+categories = ["data-structures"]
 description = """
 This crate is a tool of handling chars.
 """
