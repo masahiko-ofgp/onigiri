@@ -28,7 +28,7 @@
 ///         false
 ///     );
 ///
-pub fn is_integer(vc: &Vec<char>) -> bool {
+pub fn is_integer(vc: &[char]) -> bool {
     (is_positive_integer(&vc) == true)|
         (is_negative_integer(&vc) == true)
 }
@@ -54,7 +54,7 @@ pub fn is_integer(vc: &Vec<char>) -> bool {
 ///         false
 ///     );
 /// 
-pub fn is_positive_integer(vc: &Vec<char>) -> bool {
+pub fn is_positive_integer(vc: &[char]) -> bool {
     let mut iter = vc.iter().peekable();
 
     loop {
@@ -91,7 +91,7 @@ pub fn is_positive_integer(vc: &Vec<char>) -> bool {
 ///         false
 ///     );
 /// 
-pub fn is_negative_integer(vc: &Vec<char>) -> bool {
+pub fn is_negative_integer(vc: &[char]) -> bool {
     let head = &vc[0];
     let tail = &vc[1..];
 
@@ -128,7 +128,7 @@ pub fn is_negative_integer(vc: &Vec<char>) -> bool {
 ///         false
 ///     );
 /// 
-pub fn is_float(vc: &Vec<char>) -> bool {
+pub fn is_float(vc: &[char]) -> bool {
     (is_positive_float(&vc) == true)|
         (is_negative_float(&vc) == true)
 }
@@ -155,7 +155,7 @@ pub fn is_float(vc: &Vec<char>) -> bool {
 ///         false
 ///     );
 /// 
-pub fn is_positive_float(vc: &Vec<char>) -> bool {
+pub fn is_positive_float(vc: &[char]) -> bool {
     let mut iter = vc.iter().peekable();
     let mut count: usize = 0;
     let mut stack: Vec<bool> = vec![];
@@ -198,7 +198,7 @@ pub fn is_positive_float(vc: &Vec<char>) -> bool {
 ///         true
 ///     );
 /// 
-pub fn is_negative_float(vc: &Vec<char>) -> bool {
+pub fn is_negative_float(vc: &[char]) -> bool {
     let head = &vc[0];
     let tail = &vc[1..];
 
@@ -239,7 +239,7 @@ pub fn is_negative_float(vc: &Vec<char>) -> bool {
 ///         true
 ///     );
 /// 
-pub fn is_punctuation(vc: &Vec<char>) -> bool {
+pub fn is_punctuation(vc: &[char]) -> bool {
     let mut iter = vc.iter().peekable();
 
     loop {
@@ -279,7 +279,7 @@ pub fn is_punctuation(vc: &Vec<char>) -> bool {
 ///         false
 ///     );
 ///
-pub fn is_lower_ascii(vc: &Vec<char>) -> bool {
+pub fn is_lower_ascii(vc: &[char]) -> bool {
     let mut iter = vc.iter().peekable();
 
     loop {
@@ -318,7 +318,7 @@ pub fn is_lower_ascii(vc: &Vec<char>) -> bool {
 ///         false
 ///     );
 ///     
-pub fn is_upper_ascii(vc: &Vec<char>) -> bool {
+pub fn is_upper_ascii(vc: &[char]) -> bool {
     let mut iter = vc.iter().peekable();
 
     loop {
@@ -352,7 +352,7 @@ pub fn is_upper_ascii(vc: &Vec<char>) -> bool {
 ///         false
 ///     );
 ///
-pub fn is_title(vc: &Vec<char>) -> bool {
+pub fn is_title(vc: &[char]) -> bool {
     let head = &vc[0];
     let tail = &vc[1..];
 

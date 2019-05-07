@@ -22,7 +22,7 @@ use super::validator;
 ///         "-123".to_string()
 ///     );
 /// 
-pub fn chars_to_string(chars: &Vec<char>) -> String {
+pub fn chars_to_string(chars: &[char]) -> String {
     let vec_str: Vec<u8> = chars.iter()
         .map(|&v| v as u8)
         .collect();
@@ -47,7 +47,7 @@ pub fn chars_to_string(chars: &Vec<char>) -> String {
 ///         Some(0.12_f64)
 ///     );
 ///
-pub fn cast<T: FromStr>(vc: &Vec<char>) -> Option<T> {
+pub fn cast<T: FromStr>(vc: &[char]) -> Option<T> {
     if validator::is_integer(&vc)|validator::is_float(&vc) {
         let vc2s = chars_to_string(&vc);
         match T::from_str(&vc2s) {
@@ -90,6 +90,7 @@ pub fn search_all(btmvc: &BTreeMap<usize, Vec<char>>, word: String) -> Option<Ve
 pub struct Vvc {
     pub attr: Vec<Vec<char>>
 }
+
 
 impl Vvc {
 
