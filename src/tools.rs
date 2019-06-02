@@ -59,6 +59,19 @@ pub fn cast<T: FromStr>(vc: &[char]) -> Option<T> {
     }
 }
 
+/// This function can compare `Vec<char>` with string.
+///
+///     use onigiri::tools::strcmp;
+///
+///     let test_vc = vec!['-', '2'];
+///
+///     assert_eq!(true, strcmp(&test_vc, "-2"));
+///
+pub fn strcmp<'s>(vc: &[char], cmp_string: &'s str) -> bool {
+    let _chars = cmp_string.chars().collect::<Vec<char>>();
+    vc == &*_chars
+}
+
 /// This function can search a word. 
 /// And return index for `BTreeMap<usize, Vec<char>>`.
 /// 
@@ -142,5 +155,24 @@ impl Vvc {
         if bt.is_empty() {
             None
         } else { Some(bt) }
+    }
+
+    /// This function find string in `Vvc.attr`.
+    ///
+    ///     use onigiri::tools::Vvc;
+    ///
+    ///     let test_text = "12 hello 34 abc".to_string();
+    ///     let vvc = Vvc::new(&test_text, ' ');
+    ///
+    ///     assert_eq!(true, vvc.find("abc"));
+    ///     assert_eq!(false, vvc.find("hollo"));
+    ///
+    pub fn find<'f>(&self, search_string: &'f str) -> bool {
+        for vc in &self.attr {
+            if strcmp(vc, search_string) {
+                return true;
+            }
+        }
+        false
     }
 }

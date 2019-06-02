@@ -9,6 +9,12 @@ The japanese name of rice ball is "Onigiri".
 In my image, a grain of rice is `char`. 
 And what collected them is `chars`. 
 
+##### June 2 2019
+
+Add
+- `tools::strcmp`
+- Vvc method `find`
+
 ##### April 8 2019
 
 Add 
@@ -34,14 +40,6 @@ Accordingly, I added `is_float`, `is_positive_float` and `is_negative_float` new
 
 Renamed `create_btm` to `to_btm`.
 
-##### Dec 9 2018
-
-Vvc make it possible to specify a separator.
-
-##### Nov 5 2018
-
-Added new function `search_all`.
-
 
 ## Usage
 
@@ -49,7 +47,7 @@ You add onigiri in Cargo.toml.
 
 ```
 [dependencies]
-onigiri = "0.1.13"
+onigiri = "0.1.14"
 ```
 example is as follows.
 
