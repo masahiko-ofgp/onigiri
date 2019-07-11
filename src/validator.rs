@@ -365,3 +365,43 @@ pub fn is_title(vc: &[char]) -> bool {
         _ => false
     }
 }
+
+/// Validate `Vec<char>` whether it starts with `c: char`.
+///
+///     use onigiri::validator::starts_with;
+///
+///     let test_vc = vec!['(', '1', '2', ')'];
+///
+///     assert_eq!(
+///         starts_with(&test_vc, '('),
+///         true
+///     );
+///     assert_eq!(
+///         starts_with(&test_vc, ')'),
+///         false
+///     );
+///
+pub fn starts_with(vc: &[char], c: char) -> bool {
+    let start = &vc[0];
+    &c == start
+}
+
+/// Validate `Vec<char>` whether it ends with `c: char`.
+///
+///     use onigiri::validator::ends_with;
+///
+///     let test_vc = vec!['(', '1', '2', ')'];
+///
+///     assert_eq!(
+///         ends_with(&test_vc, ')'),
+///         true
+///     );
+///     assert_eq!(
+///         ends_with(&test_vc, '('),
+///         false
+///     );
+///
+pub fn ends_with(vc: &[char], c: char) -> bool {
+    let end = &vc[vc.len() - 1];
+    &c == end
+}

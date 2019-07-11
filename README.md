@@ -9,6 +9,12 @@ The japanese name of rice ball is "Onigiri".
 In my image, a grain of rice is `char`. 
 And what collected them is `chars`. 
 
+##### July 11 2019
+
+Add
+- `validator::starts_with`
+- `validator::ends_with`
+
 ##### June 2 2019
 
 Add
@@ -30,24 +36,13 @@ Renamed `validator::is_symbol` -> `validator::is_punctuation`
 
 Modified DocComment and DocTest.
 
-##### Dec 24 2018
-
-Removed what seems useless from `tools.rs`.
-
-Then I renamed `is_number`, `is_positive_number`, `is_negative_number` to `is_integer`, `is_positive_integer`, `is_negative_integer`.
-
-Accordingly, I added `is_float`, `is_positive_float` and `is_negative_float` newly.
-
-Renamed `create_btm` to `to_btm`.
-
-
 ## Usage
 
 You add onigiri in Cargo.toml.
 
 ```
 [dependencies]
-onigiri = "0.1.14"
+onigiri = "0.1.15"
 ```
 example is as follows.
 

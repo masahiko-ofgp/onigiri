@@ -83,7 +83,9 @@ pub fn strcmp<'s>(vc: &[char], cmp_string: &'s str) -> bool {
 ///
 ///     assert_eq!(result, Some(vec![0, 2]));
 ///
-pub fn search_all(btmvc: &BTreeMap<usize, Vec<char>>, word: String) -> Option<Vec<usize>> {
+pub fn search_all(btmvc: &BTreeMap<usize, Vec<char>>, word: String) 
+    -> Option<Vec<usize>> 
+{
     let word_vc: Vec<char> = word.chars().collect();
     let mut stack: Vec<usize> = vec![];
     for k in btmvc.keys() {
