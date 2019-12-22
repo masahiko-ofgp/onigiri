@@ -15,6 +15,7 @@
 ///     let test_chars_1 = vec!['1', '2'];
 ///     let test_chars_2 = vec!['-', '1'];
 ///     let test_chars_3 = vec!['-', 'a'];
+///
 ///     assert_eq!(
 ///         is_integer(&test_chars_1), 
 ///         true
@@ -60,7 +61,7 @@ pub fn is_positive_integer(vc: &[char]) -> bool {
     loop {
         match iter.next() {
             Some(p) => match p {
-                '0'...'9' => continue,
+                '0' ..= '9' => continue,
                 _ => return false
             },
             None => break
@@ -164,7 +165,7 @@ pub fn is_positive_float(vc: &[char]) -> bool {
         match iter.next() {
             Some(i) => match i {
                 '.' => count += 1,
-                '0'...'9' => stack.push(true),
+                '0' ..= '9' => stack.push(true),
                 _ => stack.push(false)
             },
             None => break
@@ -357,7 +358,7 @@ pub fn is_title(vc: &[char]) -> bool {
     let tail = &vc[1..];
 
     match head {
-        'A' ... 'Z' => if is_lower_ascii(&tail.to_vec()) {
+        'A' ..= 'Z' => if is_lower_ascii(&tail.to_vec()) {
             true
         } else {
             false

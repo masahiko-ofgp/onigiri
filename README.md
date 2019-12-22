@@ -9,32 +9,14 @@ The japanese name of rice ball is "Onigiri".
 In my image, a grain of rice is `char`. 
 And what collected them is `chars`. 
 
-##### July 11 2019
+## Dec 22, 2019
 
-Add
-- `validator::starts_with`
-- `validator::ends_with`
+onigiri 0.2.0 released.
 
-##### June 2 2019
-
-Add
-- `tools::strcmp`
-- Vvc method `find`
-
-##### April 8 2019
-
-Add 
-- `validator::is_lower_ascii`
-- `validator::is_upper_ascii`
-- `validator::is_title`
-
-##### Feb 25 2019
-
-Removed `tools::create_vvchar`.
-
-Renamed `validator::is_symbol` -> `validator::is_punctuation`
-
-Modified DocComment and DocTest.
+- Add struct `Onigiri`. This is Factory. It can select either `Vvc` or
+ `Btmvc` and generate it.
+- Remove `tools.rs`.
+- Add `vvc.rs`, `btmvc.rs`, 'utils.rs'.
 
 ## Usage
 
@@ -42,28 +24,42 @@ You add onigiri in Cargo.toml.
 
 ```
 [dependencies]
-onigiri = "0.1.15"
+onigiri = "0.2.0"
 ```
 example is as follows.
 
 ```
-use onigiri::tools::{Vvc, cast};
-use onigiri::validator;
+use onigiri::Onigiri;
+use onigiri::vvc::Vvc;
 
 fn main() {
-    let test_text = "(13 + 2)".to_string();
-    
-    let new_vvchar = Vvc::new(&test_text, ' ');
+    let s = "I eat an onigiri.".to_string();
+
+    let oni = Onigiri::new(&s);
+
+    // Create Vec<Vec<char>>
+    let vvc = oni.create_vvc(' ');
+
+    // Create BTreeMap<usize, Vec<char>>
+    let btmvc = oni.create_btmvc(' ');
+
     assert_eq!(
-        &new_vvchar,
-        &vec![vec!['(', '1','3'],vec!['+'],vec!['2', ')']]
-    );
-    
-    let thirteen = &new_vvchar[0][1..].to_vec();
-    assert_eq!(validator::is_positive_integer(&thirteen), true);
-   
-    let num = cast::<u8>(&thirteen);
-    assert_eq!(&num, &Some(13_u8));
-    assert_eq!(&num.unwrap() + 2, 15_u8);
+        vvc,
+        Vvc {
+            attr: vec![
+                vec!['I'],
+                vec!['e', 'a', 't'],
+                vec!['a', 'n'],
+                vec!['o', 'n', 'i', 'g', 'i', 'r', 'i', '.']
+            ]
+        }
+        );
+
+    assert_eq!(btmvc.attr.get(&0), Some(&vec!['I']));
+    assert_eq!(btmvc.attr.get(&1), Some(&vec!['e', 'a', 't']));
+    assert_eq!(btmvc.attr.get(&2), Some(&vec!['a', 'n']));
+    assert_eq!(btmvc.attr.get(&3), Some(
+            &vec!['o', 'n', 'i', 'g', 'i', 'r', 'i', '.']
+            ));
 }
 ```
