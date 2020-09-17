@@ -1,6 +1,5 @@
 # onigiri
 
-[![Build Status](https://travis-ci.org/masahiko-ofgp/onigiri.svg?branch=master)](https://travis-ci.org/masahiko-ofgp/onigiri)
 
 <img src="./imgs/onigiri2.png" width=60% alt="onigiri">
 
